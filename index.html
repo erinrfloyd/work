@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erin Floyd — Creative Leadership Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --claret: #6B1B2F;
+      --dusty:  #D4919A;
+      --blush:  #F2D5D8;
+      --white:  #FAF6F4;
+      --dark:   #1A0A0E;
+      --mid:    #9E4A5C;
+      --tangerine: var(--claret);
+      --peach-mid: var(--dusty);
+      --peach:     var(--blush);
+      --cream:     var(--white);
+      --orange:    var(--mid);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--dark); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(255,248,243,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,90,18,0.12);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--claret); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--dark); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--claret); }
+
+    /* HERO */
+    #home { display: grid; grid-template-columns: 1fr; grid-template-rows: auto auto; position: relative; overflow: hidden; padding: 0; }
+    .hero-left { background: var(--claret); display: flex; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem; padding: 8rem 8rem 3rem; position: relative; }
+    .hero-left-text { flex: 1; min-width: 280px; }
+    .hero-left-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 900; color: rgba(250,246,244,0.38); line-height: 1; margin-bottom: 0; animation: fadeUp 0.8s 0.15s ease both; }
+    .hero-name em { font-style: italic; color: var(--white); }
+    .hero-tagline { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: rgba(242,213,216,0.88); max-width: 460px; line-height: 1.75; margin-bottom: 2rem; animation: fadeUp 0.8s 0.3s ease both; }
+    .hero-cta { display: inline-block; padding: 0.9rem 2.2rem; background: var(--dusty); color: var(--claret); text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s, transform 0.2s; animation: fadeUp 0.8s 0.45s ease both; }
+    .hero-cta:hover { background: var(--white); color: var(--claret); transform: translateY(-2px); }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.8rem; }
+    .hero-tag { padding: 0.35rem 0.9rem; background: rgba(242,213,216,0.12); border: 1px solid rgba(242,213,216,0.3); color: rgba(242,213,216,0.85); font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
+
+    /* STATS BAND */
+    .hero-stats-band {
+      background: var(--blush);
+      padding: 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(107,27,47,0.1);
+      border-bottom: 1px solid rgba(107,27,47,0.1);
+    }
+    .stats-track {
+      display: flex;
+      width: max-content;
+      animation: statsScroll 35s linear infinite;
+      align-items: stretch;
+    }
+    .stats-track:hover { animation-play-state: paused; }
+    .stat-item {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0.9rem 2.8rem;
+      border-right: 1px solid rgba(107,27,47,0.15);
+      flex-shrink: 0;
+    }
+    @keyframes statsScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--claret); display: block; line-height: 1.1; }
+    .stat-label { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); }
+
+    /* STAT TOOLTIPS */
+    .stat-item { position: relative; cursor: default; }
+    .stat-item .stat-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(107,27,47,0.70);
+      color: var(--blush);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+      padding: 0.55rem 0.9rem;
+      white-space: nowrap;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 200;
+      backdrop-filter: blur(4px);
+    }
+    .stat-item .stat-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(107,27,47,0.70);
+    }
+    .stat-item:hover .stat-tooltip { display: block; }
+
+
+    /* SHARED */
+    section { padding: 7rem 6rem; }
+    .section-label { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--dusty); margin-bottom: 0.6rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 700; color: var(--claret); line-height: 1.1; margin-bottom: 1rem; }
+    .divider { width: 48px; height: 3px; background: var(--dusty); margin-bottom: 2.5rem; }
+
+    /* ABOUT */
+    #about { background: var(--white); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; padding-top: 3.5rem; }
+    .about-visual { position: relative; height: 480px; }
+    .ab { position: absolute; border-radius: 2px; }
+    .ab2 { background: var(--dusty); width: 78%; height: 82%; top: calc(5% + 32px); left: calc(5% + 32px); border: none; overflow: hidden; }
+    .ab2::after { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23g)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 250px 250px; mix-blend-mode: overlay; opacity: 0.5; pointer-events: none; }
+    .about-photo {
+      position: absolute;
+      top: 5%; left: 5%;
+      width: 78%; height: 82%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      border-radius: 2px;
+      z-index: 3;
+    }
+    .about-text p { font-size: 1rem; line-height: 1.85; color: #2A0A12; margin-bottom: 1.2rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.8rem; }
+    .tag { padding: 0.4rem 1rem; background: var(--blush); color: var(--claret); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; border-radius: 2px; }
+
+    /* LOGOS SECTION */
+    #clients {
+      background: var(--cream);
+      padding: 15px 0 1.2rem;
+      border-bottom: 1px solid rgba(200,90,18,0.1);
+      overflow: hidden;
+    }
+    .clients-label {
+      font-family: 'DM Sans', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--mid); text-align: center; margin-bottom: 0.7rem;
+    }
+    .logo-track-wrapper {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+    .logo-track-wrapper::before,
+    .logo-track-wrapper::after {
+      content: '';
+      position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+      pointer-events: none;
+    }
+    .logo-track-wrapper::before { left: 0; background: linear-gradient(to right, #FAF6F4, transparent); }
+    .logo-track-wrapper::after  { right: 0; background: linear-gradient(to left, #FAF6F4, transparent); }
+    .logo-track {
+      display: flex; align-items: center; gap: 4rem;
+      width: max-content;
+      animation: logoScroll 35s linear infinite;
+    }
+    .logo-track:hover { animation-play-state: paused; }
+    .logo-item {
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      height: 48px;
+    }
+    .logo-item img {
+      max-height: 48px;
+      max-width: 140px;
+      width: auto;
+      object-fit: contain;
+    }
+    @keyframes logoScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* PROJECTS */
+    #projects { background: var(--peach); padding-bottom: 2.8rem; }
+    #projects .section-label { color: var(--mid); }
+    #projects .section-title { color: var(--claret); }
+    #projects .divider { background: var(--tangerine); }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 1rem; }
+    .card { background: var(--tangerine); border: 1px solid rgba(200,90,18,0.3); overflow: hidden; cursor: pointer; transition: transform 0.3s; display: flex; flex-direction: column; position: relative; }
+    .card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+    .card:hover { transform: translateY(-6px); }
+    .card:hover::after { transform: scaleX(1); }
+    .card-img { width: 100%; aspect-ratio: 1 / 1; background-size: cover; background-position: center; background-repeat: no-repeat; flex-shrink: 0; position: relative; overflow: hidden; }
+    .card-body { padding: 1.8rem 1.8rem 2rem; flex: 1; position: relative; }
+    .card-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: rgba(107,27,47,0.12); position: absolute; top: 0.8rem; right: 1.2rem; line-height: 1; }
+    .card-cat { font-family: 'DM Sans', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dusty); margin-bottom: 0.6rem; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.7rem; line-height: 1.2; padding-right: 2rem; }
+    .card-brand { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dusty); margin-bottom: 0.25rem; }
+    .card-desc { font-size: 0.85rem; color: rgba(242,213,216,0.78); line-height: 1.7; }
+    .card-result { margin-top: 1.2rem; display: block; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--dusty); letter-spacing: 0.04em; }
+    .card-kpis { display: flex; border-top: 1px solid rgba(242,213,216,0.18); margin-top: 1.2rem; padding-top: 0.9rem; gap: 0; }
+    .card-kpi { flex: 1; padding: 0 0.8rem 0 0; }
+    .card-kpi + .card-kpi { padding-left: 0.8rem; border-left: 1px solid rgba(242,213,216,0.14); }
+    .card-kpi-num { display: block; font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--dusty); line-height: 1.1; }
+    .card-kpi-label { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(242,213,216,0.5); margin-top: 0.2rem; }
+
+    /* PHOTOGRAPHY */
+    #photography { background: var(--dark); padding: 4rem 6rem; }
+    #photography .section-label { color: var(--dusty); }
+    #photography .section-title { color: var(--white); font-size: clamp(1.6rem, 3vw, 2.4rem); }
+    #photography .divider { background: var(--dusty); margin-bottom: 2rem; }
+    .photo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+    .photo-tile { aspect-ratio: 2/3; overflow: hidden; position: relative; }
+    .photo-tile img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(100%); transition: filter 0.4s ease, transform 0.4s ease; }
+    .photo-tile:hover img { filter: grayscale(0%); transform: scale(1.03); }
+
+    /* EDITORIAL */
+    #editorial { background: var(--white); }
+    #editorial .section-label { color: var(--dusty); }
+    #editorial .section-title { color: var(--claret); }
+    .editorial-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 1rem; }
+    .editorial-card { border: 1px solid rgba(107,27,47,0.15); padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; transition: transform 0.3s, box-shadow 0.3s; text-decoration: none; background: var(--white); }
+    .editorial-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(107,27,47,0.08); }
+    .editorial-pub { font-family: 'DM Sans', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mid); }
+    .editorial-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; font-weight: 400; color: var(--claret); line-height: 1.35; }
+
+    /* CONTACT */
+    #contact { padding-top: 2.8rem; background: var(--blush); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    #contact .section-title { color: var(--claret); }
+    .contact-intro { font-size: 1rem; line-height: 1.85; color: #3A1A22; margin-bottom: 2rem; }
+    .ci { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+    .ci-icon { width: 42px; height: 42px; background: var(--claret); border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; color: var(--white); }
+    .ci-detail span { display: block; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.15rem; }
+    .ci-detail a, .ci-detail p { font-size: 0.95rem; color: var(--claret); font-weight: 500; text-decoration: none; }
+    .ci-detail a:hover { text-decoration: underline; }
+    .form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .ff { display: flex; flex-direction: column; gap: 0.4rem; }
+    .ff label { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); font-weight: 500; }
+    .ff input, .ff textarea { background: var(--white); border: 1px solid rgba(107,27,47,0.2); padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark); outline: none; transition: border-color 0.2s; border-radius: 2px; }
+    .ff input:focus, .ff textarea:focus { border-color: var(--claret); }
+    .ff textarea { resize: vertical; min-height: 120px; }
+    .btn-send { padding: 1rem 2.4rem; background: var(--claret); color: var(--white); border: none; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.2s; align-self: flex-start; }
+    .btn-send:hover { background: var(--mid); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: var(--dark); padding: 2rem 6rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-size: 0.8rem; color: rgba(212,145,154,0.55); }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--dusty); font-weight: 700; }
+
+    /* GRAYSCALE + GRAIN */
+    .card-img:not(.card-img-ph) {
+      position: relative;
+      filter: grayscale(100%);
+      transition: filter 0.4s ease;
+    }
+    .card:hover .card-img { filter: grayscale(0%); }
+    .card-img:not(.card-img-ph)::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 250px 250px;
+      mix-blend-mode: overlay; opacity: 0.55;
+      pointer-events: none; z-index: 3;
+      transition: opacity 0.4s ease;
+    }
+    .card:hover .card-img:not(.card-img-ph)::after { opacity: 0.2; }
+
+    /* TESTIMONIAL */
+    #testimonial {
+      background: var(--dark);
+      padding: 6rem 8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #testimonial::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 22rem; line-height: 1;
+      color: var(--claret); opacity: 0.15;
+      position: absolute; top: -3rem; left: 4rem;
+      pointer-events: none;
+    }
+    .testimonial-inner { max-width: 860px; position: relative; z-index: 1; }
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+      font-style: italic; color: var(--white); line-height: 1.7; margin-bottom: 2.2rem;
+    }
+    .testimonial-quote em { font-style: normal; color: var(--dusty); font-weight: 700; }
+    .testimonial-cite {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--peach-mid);
+      border-left: 3px solid var(--orange);
+      padding-left: 1rem; line-height: 1.9;
+    }
+    .testimonial-cite span { display: block; color: rgba(212,145,154,0.55); letter-spacing: 0.08em; text-transform: none; font-size: 0.75rem; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } .editorial-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.8rem; }
+      .nav-links { gap: 1.4rem; }
+      .hero-left { padding: 7rem 2rem 3rem; flex-direction: column; align-items: flex-start; }
+      section { padding: 4rem 2rem; }
+      #clients { padding: 3rem 2rem; }
+      #about, #contact { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { display: none; }
+      .projects-grid, .editorial-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; padding: 1.6rem 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#home" class="nav-logo">Erin Floyd.</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#editorial">Writing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="home">
+    <div class="hero-left">
+      <div class="hero-left-text">
+        <h1 class="hero-name">Hi, I'm <em>Erin.</em></h1>
+      </div>
+      <div class="hero-left-actions">
+        <p class="hero-tagline">14 years in creative content across beauty, luxury and fashion — delivering 360 campaigns for prestige beauty brands across film, still and digital.</p>
+        <a href="#projects" class="hero-cta">See My Work</a>
+        <div class="hero-tags">
+          <span class="hero-tag">360 Campaign Development</span>
+          <span class="hero-tag">Creative Direction</span>
+          <span class="hero-tag">Integrated Campaign Delivery</span>
+          <span class="hero-tag">Visual Storytelling</span>
+          <span class="hero-tag">Creative Leadership</span>
+          <span class="hero-tag">AI Creative Tools</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS / LOGOS -->
+  <div id="clients">
+    <p class="clients-label">I've Worked With</p>
+    <div class="logo-track-wrapper">
+      <div class="logo-track">
+        <div class="logo-item"><img src="image8.png" alt="Financial Times" /></div>
+        <div class="logo-item"><img src="image3.png" alt="M·A·C Cosmetics" /></div>
+        <div class="logo-item"><img src="image6.png" alt="Dazed Media" /></div>
+        <div class="logo-item"><img src="image11.png" alt="Harper's Bazaar" /></div>
+        <div class="logo-item"><img src="image13.png" alt="Numéro" /></div>
+        <div class="logo-item"><img src="image4.png" alt="AnOther Magazine" /></div>
+        <div class="logo-item"><img src="image5.png" alt="British Academy of Jewellery" /></div>
+        <div class="logo-item"><img src="image7.png" alt="Fashion Network" /></div>
+        <div class="logo-item"><img src="image9.gif" alt="Fucking Young!" /></div>
+        <div class="logo-item"><img src="image10.png" alt="Hachette" /></div>
+        <div class="logo-item"><img src="image12.png" alt="Edelmont Genève" /></div>
+        <div class="logo-item"><img src="image14.png" alt="Vice" /></div>
+        <div class="logo-item"><img src="image8.png" alt="Financial Times" /></div>
+        <div class="logo-item"><img src="image3.png" alt="M·A·C Cosmetics" /></div>
+        <div class="logo-item"><img src="image6.png" alt="Dazed Media" /></div>
+        <div class="logo-item"><img src="image11.png" alt="Harper's Bazaar" /></div>
+        <div class="logo-item"><img src="image13.png" alt="Numéro" /></div>
+        <div class="logo-item"><img src="image4.png" alt="AnOther Magazine" /></div>
+        <div class="logo-item"><img src="image5.png" alt="British Academy of Jewellery" /></div>
+        <div class="logo-item"><img src="image7.png" alt="Fashion Network" /></div>
+        <div class="logo-item"><img src="image9.gif" alt="Fucking Young!" /></div>
+        <div class="logo-item"><img src="image10.png" alt="Hachette" /></div>
+        <div class="logo-item"><img src="image12.png" alt="Edelmont Genève" /></div>
+        <div class="logo-item"><img src="image14.png" alt="Vice" /></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="about-visual reveal">
+      <div class="ab ab2"></div>
+      <div class="about-photo" style="background-image:url('image2.jpg')"></div>
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Creative.<br>Strategist.<br>Storyteller.</h2>
+      <div class="divider"></div>
+      <p>Creative and editorial director with 10+ years leading ATL &amp; BTL brand narrative, creative direction, creative strategy and production management across fashion, beauty and luxury.</p>
+      <p>Previously Creative &amp; Content Lead for MAC Cosmetics UK &amp; Ireland; Global Editor at Fashion Network, Paris. Photography and production credits for Harper's Bazaar, Tatler and Numéro.</p>
+      <p>Critical writing on contemporary art and photography published in Vice, Dazed and AnOther Magazine.</p>
+      <p style="font-size:0.82rem; color: var(--mid); font-weight:700; letter-spacing:0.03em;">MA Oxon, University of Oxford &nbsp;·&nbsp; NCTJ Diploma in Journalism</p>
+    </div>
+  </section>
+
+  <div class="hero-stats-band">
+    <div class="stats-track">
+      <div class="stat-item"><span class="stat-num">35+</span><span class="stat-label">Campaigns</span></div>
+      <div class="stat-item"><span class="stat-num">+183%</span><span class="stat-label">EMV over benchmark (8wk)</span><span class="stat-tooltip">MACximal Matte Lip UK campaign with Danielle Marcan</span></div>
+      <div class="stat-item"><span class="stat-num">+26%</span><span class="stat-label">Owned social effectiveness</span><span class="stat-tooltip">Studio Radiance Paid Social</span></div>
+      <div class="stat-item"><span class="stat-num">+131%</span><span class="stat-label">Sales uplift</span><span class="stat-tooltip">MAC Trend — social-first trend project</span></div>
+      <div class="stat-item"><span class="stat-num">+128%</span><span class="stat-label">Sales uplift YoY</span><span class="stat-tooltip">MAC Trend — social-first trend project</span></div>
+      <div class="stat-item"><span class="stat-num">85</span><span class="stat-label">Global markets</span><span class="stat-tooltip">Karo</span></div>
+      <div class="stat-item"><span class="stat-num">40,000%+</span><span class="stat-label">Organic social engagement</span><span class="stat-tooltip">MAC × Maura Higgins</span></div>
+      <div class="stat-item"><span class="stat-num">+2000%</span><span class="stat-label">Organic interactions WoW</span><span class="stat-tooltip">MAC × RuPaul UK World AIDS Day social campaign</span></div>
+      <div class="stat-item"><span class="stat-num">35+</span><span class="stat-label">Campaigns</span></div>
+      <div class="stat-item"><span class="stat-num">+183%</span><span class="stat-label">EMV over benchmark (8wk)</span><span class="stat-tooltip">MACximal Matte Lip UK campaign with Danielle Marcan</span></div>
+      <div class="stat-item"><span class="stat-num">+26%</span><span class="stat-label">Owned social effectiveness</span><span class="stat-tooltip">Studio Radiance Paid Social</span></div>
+      <div class="stat-item"><span class="stat-num">+131%</span><span class="stat-label">Sales uplift</span><span class="stat-tooltip">MAC Trend — social-first trend project</span></div>
+      <div class="stat-item"><span class="stat-num">+128%</span><span class="stat-label">Sales uplift YoY</span><span class="stat-tooltip">MAC Trend — social-first trend project</span></div>
+      <div class="stat-item"><span class="stat-num">85</span><span class="stat-label">Global markets</span><span class="stat-tooltip">Karo</span></div>
+      <div class="stat-item"><span class="stat-num">40,000%+</span><span class="stat-label">Organic social engagement</span><span class="stat-tooltip">MAC × Maura Higgins</span></div>
+      <div class="stat-item"><span class="stat-num">+2000%</span><span class="stat-label">Organic interactions WoW</span><span class="stat-tooltip">MAC × RuPaul UK World AIDS Day social campaign</span></div>
+    </div>
+  </div>
+
+  <section id="testimonial">
+    <div class="testimonial-inner reveal">
+      <blockquote class="testimonial-quote">
+        "The execution [of the campaign] is flawless, the ideation brilliant and the collaboration&nbsp;… one we will highlight to all regions going forward as our <em>gold standard</em>. We are so grateful for everything that you have done."
+      </blockquote>
+      <cite class="testimonial-cite">
+        SVP Global Marketing, MAC Cosmetics
+        <span>On Maura Higgins × MAC</span>
+      </cite>
+    </div>
+  </section>
+
+  <section id="projects">
+    <p class="section-label reveal">Selected Work</p>
+    <h2 class="section-title reveal" style="white-space:nowrap;">Campaigns &amp; Projects</h2>
+    <div class="divider reveal"></div>
+    <div class="projects-grid">
+
+      <!-- CARD 01: Maura Higgins -->
+      <div class="card reveal">
+        <div class="card-img" style="background-image:url('image29.jpg'); background-position: 70% center;"></div>
+        <div class="card-body">
+          <div class="card-num">01</div>
+          <p class="card-cat">Celebrity Campaign</p>
+          <h3 class="card-title"><span class="card-brand">MAC Cosmetics</span>Maura Higgins × MAC Celebrity Campaign</h3>
+          <p class="card-desc">Led end-to-end creative direction, content strategy and messaging for a high-impact celebrity campaign starring Maura Higgins — from brief through to delivery across OOH, DOOH, paid and organic social and retail. Praised by SVP Global Marketing as the gold standard for all regions.</p>
+          <div class="card-kpis">
+            <div class="card-kpi"><span class="card-kpi-num">+75%</span><span class="card-kpi-label">Owned post engagement</span></div>
+            <div class="card-kpi"><span class="card-kpi-num">100%</span><span class="card-kpi-label">Product sell-through</span></div>
+            <div class="card-kpi"><span class="card-kpi-num">+40,000%</span><span class="card-kpi-label">Social interactions</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 02: Lamisil -->
+      <div class="card reveal">
+        <div class="card-img" style="background-image:url('lamisil.jpg')"></div>
+        <div class="card-body">
+          <div class="card-num">02</div>
+          <p class="card-cat">Global Brand Campaign</p>
+          <h3 class="card-title"><span class="card-brand">Lamisil</span>Global Brand Campaign 2025</h3>
+          <p class="card-desc">Led creative strategy, creative direction, campaign messaging and production for a global brand campaign — originating the campaign's visual language across photographic, motion and post-production, directing motion, 3D and post-production effects to communicate scientific efficacy, energy and movement, and providing a UGC creative framework for market activation across all regions. Creation of a messaging framework with claims hierarchy with direction for use across the full funnel.</p>
+          <span class="card-result">OOH · DOOH · Paid social · Organic social · PR &amp; eventing</span>
+        </div>
+      </div>
+
+      <!-- CARD 03: MAC × Lick Partnership -->
+      <div class="card reveal">
+        <div class="card-img" style="background-image:url('image27.jpg')"></div>
+        <div class="card-body">
+          <div class="card-num">03</div>
+          <p class="card-cat">Brand Partnership</p>
+          <h3 class="card-title"><span class="card-brand">MAC Cosmetics × Lick</span>Disruptive Partnership Campaign</h3>
+          <p class="card-desc">Conceived and directed a culturally resonant partnership campaign built around shade and a new product launch — social-first with a strong brand-building equity dimension. Creative and editorial direction, art direction for model talent; interiors covered by Lick team.</p>
+          <div class="card-kpis">
+            <div class="card-kpi"><span class="card-kpi-num">100%</span><span class="card-kpi-label">Sell-through of product</span></div>
+            <div class="card-kpi"><span class="card-kpi-num">+300%</span><span class="card-kpi-label">Organic interactions WoW</span></div>
+            <div class="card-kpi"><span class="card-kpi-num">+34%</span><span class="card-kpi-label">Thruplay hold rate above benchmark</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 04: MACximal -->
+      <div class="card reveal">
+        <div class="card-img" style="background-image:url('image30.jpg')"></div>
+        <div class="card-body">
+          <div class="card-num">04</div>
+          <p class="card-cat">360° Campaign</p>
+          <h3 class="card-title"><span class="card-brand">MAC Cosmetics</span>MACximal Silky Matte Lipstick — 360° Relaunch</h3>
+          <p class="card-desc">Creative strategy, campaign messaging and full-funnel editorial direction, creative direction and casting for MAC UK's biggest ever campaign, starring high profile beauty creator talent including Danielle Marcan.</p>
+          <p class="card-desc" style="margin-top:0.6rem;">Including TVC voiceover scripting, casting and directing; OOH (buses, taxis) editorial direction and graphic layout; national campaign messaging and shoot direction, creative strategy, AR and social assets.</p>
+          <div class="card-kpis">
+            <div class="card-kpi"><span class="card-kpi-num">+183%</span><span class="card-kpi-label">EMV over benchmark</span></div>
+            <div class="card-kpi"><span class="card-kpi-num">+15%</span><span class="card-kpi-label">Meta imp. over target</span></div>
+            <div class="card-kpi"><span class="card-kpi-num">+26%</span><span class="card-kpi-label">Owned social effectiveness</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 05: Edelmont -->
+      <div class="card reveal">
+        <div class="card-img" style="background-image:url('photo1.png'); background-position: center top;"></div>
+        <div class="card-body">
+          <div class="card-num">05</div>
+          <p class="card-cat">Luxury Editorial</p>
+          <h3 class="card-title"><span class="card-brand">Edelmont Genève</span>Debut Luxury Lookbook</h3>
+          <p class="card-desc">Art direction, production and photography for the brand's inaugural lookbook — a refined editorial vision translating Edelmont Genève's jewellery into a world of understated glamour. Complete creative ownership from concept through to final image.</p>
+          <span class="card-result">Art Direction · Production · Photography · Luxury Editorial</span>
+        </div>
+      </div>
+
+      <!-- CARD 06: MAC LFW -->
+      <div class="card reveal">
+        <div class="card-img" style="background-image:url('image31.png')"></div>
+        <div class="card-body">
+          <div class="card-num">06</div>
+          <p class="card-cat">Social Media Strategy</p>
+          <h3 class="card-title"><span class="card-brand">MAC Cosmetics</span>London Fashion Week</h3>
+          <p class="card-desc">Social media content strategy for MAC's global London Fashion Week content, directing MAC's social presence across the brand's international channels during London Fashion Week.</p>
+          <span class="card-result">Global social content strategy · LFW</span>
+        </div>
+      </div>
+
+      <!-- CARD 07: Studio Radiance -->
+      <div class="card reveal">
+        <div class="card-img" style="background-image:url('mac-meta.jpg')"></div>
+        <div class="card-body">
+          <div class="card-num">07</div>
+          <p class="card-cat">360° Campaign</p>
+          <h3 class="card-title"><span class="card-brand">MAC Cosmetics</span>Studio Radiance Foundation — National 360 Campaign</h3>
+          <p class="card-desc">Led creative direction and editorial positioning for a national 360 campaign, defining visual identity, messaging and asset strategy across all channels and the national campaign shoot.</p>
+          <div class="card-kpis">
+            <div class="card-kpi"><span class="card-kpi-num">+31%</span><span class="card-kpi-label">Meta thruplays above target</span></div>
+            <div class="card-kpi"><span class="card-kpi-num">25,000</span><span class="card-kpi-label">TikTok leads</span></div>
+            <div class="card-kpi"><span class="card-kpi-num">+38%</span><span class="card-kpi-label">Reach over target</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 08: Lamisil DOOH -->
+      <div class="card reveal">
+        <div class="card-img" style="background-image:url('Lamisil_DOOH.png')"></div>
+        <div class="card-body">
+          <div class="card-num">08</div>
+          <p class="card-cat">Copywriting · DOOH</p>
+          <h3 class="card-title"><span class="card-brand">Lamisil</span>Lamisil DOOH Campaign</h3>
+          <p class="card-desc">Repositioning an antifungal brand for a gym-going audience by speaking their language. Copy written for 12 national DOOH locations, using the motivational voice of gym culture to make Lamisil feel like part of the routine.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section id="editorial">
+    <p class="section-label reveal">Journalism &amp; Writing</p>
+    <h2 class="section-title reveal">Editorial Work</h2>
+    <div class="divider reveal"></div>
+    <div class="editorial-grid">
+
+      <a class="editorial-card reveal" href="https://www.anothermag.com/art-photography/13938/celia-croft-unapologetic-portraits-of-female-bodybuilders-core-book" target="_blank" rel="noopener">
+        <p class="editorial-pub">AnOther Magazine</p>
+        <h3 class="editorial-title">Celia Croft's "Unapologetic" Portraits of Female Bodybuilders</h3>
+      </a>
+
+      <a class="editorial-card reveal" href="https://www.vice.com/en/article/darkness-is-comforting-the-japanese-artists-subverting-kawaii-culture-2/" target="_blank" rel="noopener">
+        <p class="editorial-pub">Vice / Broadly</p>
+        <h3 class="editorial-title">'Darkness Is Comforting': The Japanese Artists Subverting Kawaii Culture</h3>
+      </a>
+
+      <a class="editorial-card reveal" href="https://uk.fashionnetwork.com/news/Vivienne-westwood-s-inimitable-lightness-of-being,1019416.html" target="_blank" rel="noopener">
+        <p class="editorial-pub">Fashion Network · Paris</p>
+        <h3 class="editorial-title">Vivienne Westwood's Inimitable Lightness of Being</h3>
+      </a>
+
+      <a class="editorial-card reveal" href="https://uk.fashionnetwork.com/news/Alexa-chung-40-sell-through-in-three-weeks-as-stockists-double,875615.html" target="_blank" rel="noopener">
+        <p class="editorial-pub">Fashion Network</p>
+        <h3 class="editorial-title">Alexa Chung: 40% Sell-Through in Three Weeks as Stockists Double</h3>
+      </a>
+
+    </div>
+
+  </section>
+
+  <section id="contact">
+    <div class="reveal">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Let's work together</h2>
+      <div class="divider"></div>
+      <p class="contact-intro">Whether you have a project in mind, want to collaborate, or just want to say hello — I'd love to hear from you.</p>
+      <div class="ci">
+        <div class="ci-icon" style="font-size:0.75rem;font-weight:700;">in</div>
+        <div class="ci-detail"><span>LinkedIn</span><a href="https://www.linkedin.com/in/erinrfloyd/" target="_blank" rel="noopener">linkedin.com/in/erinrfloyd</a></div>
+      </div>
+      <div class="ci">
+        <div class="ci-icon">📍</div>
+        <div class="ci-detail"><span>Based in</span><p>United Kingdom</p></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <form class="form" action="https://formspree.io/f/xaqlrvny" method="POST" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="ff"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" required /></div>
+          <div class="ff"><label>Email Address</label><input type="email" name="email" placeholder="jane@example.com" required /></div>
+        </div>
+        <div class="ff"><label>Subject</label><input type="text" name="subject" placeholder="Project enquiry…" /></div>
+        <div class="ff"><label>Message</label><textarea name="message" placeholder="Tell me about your project…" required></textarea></div>
+        <button type="submit" class="btn-send">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Erin Floyd</span>
+    <p>© 2026 Erin Floyd. All rights reserved.</p>
+    <p>Designed with intention.</p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => obs.observe(el));
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('.btn-send');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          btn.textContent = 'Sent!';
+          form.reset();
+        } else {
+          btn.textContent = 'Error — try again';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Error — try again';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
